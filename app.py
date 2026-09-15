@@ -14,7 +14,24 @@ st.set_page_config(
 st.markdown("""
 <style>
     .block-container {padding-top: 2rem; padding-bottom: 3rem; max-width: 1400px;}
-    [data-testid="stMetric"] {background: #f7f7f4; border: 1px solid #e5e5df; padding: 16px; border-radius: 12px;}
+    [data-testid="stMetric"] {
+        background: linear-gradient(145deg, #18212a, #111820);
+        border: 1px solid #344654;
+        border-left: 4px solid #d6a85f;
+        padding: 18px;
+        border-radius: 12px;
+        min-height: 124px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    }
+    [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {
+        color: #aebbc6 !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
+        color: #f5f2e9 !important;
+        font-weight: 750 !important;
+    }
+    [data-testid="stMetricDelta"] {font-weight: 650 !important;}
     .decision {padding: 18px 22px; border-radius: 12px; margin: 8px 0 20px 0; font-weight: 700; font-size: 1.15rem;}
     .pass {background: #e8f5ee; color: #176b42; border: 1px solid #b9e2ca;}
     .review {background: #fff4d9; color: #7a5700; border: 1px solid #efd48e;}
@@ -254,7 +271,7 @@ with tabs[2]:
     delay = s4.number_input("Extra delay (months)", min_value=0, value=6, step=1)
     stressed_exit = r.gross_exit * (1 - sale_downside)
     extra_reno = r.renovation_budget * cost_overrun
-    extra_acq_interest = r.acquisition_balance_exit * (acq_rate + rate_shock) / 12 * delay + acquisition_loan * rate_shock / 12 * min(timeline, loan_term * 12)
+    extra_acq_interest = r.acquisition_balance_exit * (acq_rate + rate_shock) / 12 * delay + r.acquisition_loan * rate_shock / 12 * min(timeline, loan_term * 12)
     extra_reno_interest = r.renovation_loan * (reno_rate + rate_shock) / 12 * delay + r.renovation_loan * rate_shock * reno_months / 24
     stressed_cost = r.project_cost + extra_reno + extra_acq_interest + extra_reno_interest
     stressed_profit = stressed_exit * (1 - sales_costs) - stressed_cost
@@ -266,4 +283,3 @@ with tabs[2]:
     b.metric("Stressed profit", eur(stressed_profit), eur(stressed_profit - r.net_profit))
     c.metric("Stressed ROI", pct(stressed_roi))
     d.metric("Stressed ROE", pct(stressed_roe))
-
